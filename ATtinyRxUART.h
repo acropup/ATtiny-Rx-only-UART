@@ -10,6 +10,9 @@
     OR (if OSCCAL is calibrated)
    ATtiny84/85 @ 8MHz (internal oscillator; BOD disabled)
    
+   ATtiny84 datasheet: http://www.atmel.com/Images/doc8006.pdf
+   ATtiny85 datasheet: http://www.atmel.com/images/atmel-2586-avr-8-bit-microcontroller-attiny25-attiny45-attiny85_datasheet.pdf
+   
    Good tutorial on AVR Timers: http://www.engblaze.com/microcontroller-tutorial-avr-and-arduino-timer-interrupts/
    Also: https://arduino-info.wikispaces.com/Timers-Arduino
    
@@ -47,15 +50,17 @@
   #error Must build for ATtiny84 or ATtiny85.
 #endif
 
+#define IS_MOSI_HIGH() (PIN_MOSI & 1<<PINn_MOSI) //Checks if MOSI pin is HIGH or LOW
+
 #if TIMER_TO_USE_FOR_MILLIS == 0
 /*This USI-based UART uses Timer0.
   The Universal Serial Interface of ATtiny84 and ATtiny85 can be configured 
   to clock to Timer0 only, so if we also want to use the standard Arduino libraries,
   we need to make sure that functions like millis(), delay(), and elapsedMillis
   all use Timer1. That leaves Timer0 free to be used here.
-  The Arduino definitions for ATtiny84 ******HERE******* map those functions
-  to Timer0, so it is necessary to edit the hardware definition file that defines
-  TIMER_TO_USE_FOR_MILLIS so that it is set to 1. */
+  The Arduino definitions for ATtiny84 at https://code.google.com/p/arduino-tiny/
+  maps those functions to Timer0, so it is necessary to edit the hardware definition 
+  file that defines TIMER_TO_USE_FOR_MILLIS so that it is set to 1. */
   #error Arduino-specified variable TIMER_TO_USE_FOR_MILLIS cannot be 0. \
   Change in the appropriate core_build_options.h, \
   possibly at Arduino\hardware\tiny\cores\tiny\core_build_options.h
@@ -65,8 +70,6 @@
 #define BIT_LENGTH  ( F_CPU / BAUD )  //Number of clock cycles per bit transmission
 #define BUFFER_SIZE   32              //Should be a power of 2 (for reference, SoftwareSerial has a 64-byte buffer)
 #define BUFFER_MASK ( BUFFER_SIZE - 1 )
-
-#define IS_MOSI_HIGH() (PIN_MOSI & 1<<PINn_MOSI) //Checks if MOSI pin is HIGH or LOW
 
 // Circular buffer for storing received chars
 char buffer[BUFFER_SIZE]; //TODO: remove this = (char*)malloc(BUFFER_SIZE * sizeof(char));
