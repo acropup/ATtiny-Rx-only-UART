@@ -18,8 +18,8 @@ mode to receive bytes. The UART MOSI line should be connected to the ATtiny's MO
 MISO/DO and SCK/SCL pins are not used. Timer/Counter0 is used by the USI to read in bytes.<sup>[1](#timer)</sup>
 
 ### References
-- [ATtiny84 datasheet](http://www.atmel.com/Images/doc8006.pdf) \
-- [ATtiny85 datasheet](http://www.atmel.com/images/atmel-2586-avr-8-bit-microcontroller-attiny25-attiny45-attiny85_datasheet.pdf) \
+- [ATtiny84 datasheet](http://www.atmel.com/Images/doc8006.pdf)
+- [ATtiny85 datasheet](http://www.atmel.com/images/atmel-2586-avr-8-bit-microcontroller-attiny25-attiny45-attiny85_datasheet.pdf)
 - [Arduino-Tiny - ATtiny Core](https://code.google.com/p/arduino-tiny/)
 
 <a name="timer">1</a>: *For use with ATtiny84, you must first edit ```Arduino\hardware\tiny\cores\tiny\core_build_options.h``` 
